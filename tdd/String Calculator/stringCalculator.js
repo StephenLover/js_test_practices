@@ -5,7 +5,21 @@ const stringCalculator = {
   },
   getPieces: function (expression) {
     let delimiters = [",", "\n"];
+
+    if (this.hasCustomerDelimiter(expression)) {
+      delimiters.push(this.getCustomerDelimiter(expression));
+      expression = this.stripFirstLine(expression);
+    }
     return this.getSubPieces([expression], delimiters);
+  },
+  hasCustomerDelimiter: function (expression) {
+    return /^\/\//.test(expression);
+  },
+  getCustomerDelimiter: function (expression) {
+    return expression.charAt(2)
+  },
+  stripFirstLine: function (expression) {
+    return expression.substring(expression.indexOf('\n') + 1);
   },
   getSubPieces: function (piecesSoFar, delimiters) {
     if (delimiters.length === 0) return piecesSoFar;
