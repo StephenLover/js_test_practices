@@ -1,7 +1,21 @@
 const stringCalculator = {
   add: function (expression) {
     let pieces = this.getPieces(expression)
+
+    this.checkValidity(pieces)
     return this.calculateSum(pieces)
+  },
+  checkValidity: function (pieces) {
+    let negatives = [];
+    for (let i = 0; i < pieces.length; i++) {
+      if (parseInt(pieces[i]) < 0) {
+        negatives.push(pieces[i])
+
+      }
+    }
+    if (negatives.length) {
+      throw 'negative are not allowed!' + negatives.join(', ')
+    }
   },
   getPieces: function (expression) {
     let delimiters = [",", "\n"];

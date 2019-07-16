@@ -38,4 +38,25 @@ describe('stringCalculator solution', () => {
     checkResult('//;\n1;2', 3)
   })
 
+  describe('negative numbers are not allowed', () => {
+    let caught;
+    beforeEach(function () {
+      try {
+        stringCalculator.add('-1, -42')
+      } catch (error) {
+        caught = error
+      }
+    })
+    it('should throw an exception', function () {
+      expect(caught).not.toBeNull()
+    })
+    it('should include the first invalid negative term in the exception', function () {
+      expect(caught.indexOf('-1')).not.toBe(-1)
+    })
+    it('should include the second invalid negative term in the exception', function () {
+      expect(caught.indexOf('-42')).not.toBe(-42)
+    })
+  })
+
+
 })
